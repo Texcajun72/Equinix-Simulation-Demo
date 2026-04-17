@@ -1,1 +1,1 @@
-# Equinix-Simulation-Demo
+# Equinix-Simulation
