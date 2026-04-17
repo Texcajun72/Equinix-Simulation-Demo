@@ -233,12 +233,13 @@
 
 <!-- VICTORY OVERLAY -->
 <div class="overlay" id="victory-overlay">
-  <div class="victory-badge-text">Mission Complete</div>
+  <div class="victory-badge-text">Breakthrough</div>
   <div class="victory-big">HIDDEN NEED<br>UNCOVERED</div>
   <div class="victory-sub">You surfaced what the customer wasn't telling you.</div>
   <div class="victory-code">// DATA SOVEREIGNTY ISSUE IDENTIFIED //</div>
   <div class="victory-scan"></div>
-  <button class="btn-primary" onclick="document.getElementById('victory-overlay').classList.remove('visible');endSim();">View Full Debrief</button>
+  <div style="font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--text-dim);margin-bottom:28px;text-transform:uppercase;">Clock is still running — keep discovering</div>
+  <button class="btn-primary" onclick="dismissVictory()">Continue Discovery</button>
 </div>
 
 <!-- TIMEOUT OVERLAY -->
@@ -452,7 +453,7 @@
         </div>
         <div class="sim-input-footer">
           <div class="sim-version" style="font-size:10px;color:var(--text-dim);">Enter to send &nbsp;·&nbsp; Shift+Enter for new line</div>
-          <div class="sim-version">EQUINIX PARTNER SIM // REV4</div>
+          <div class="sim-version">EQUINIX PARTNER SIM // REV5</div>
         </div>
       </div>
     </div>
@@ -612,8 +613,12 @@ function addUserMessage(text){
 }
 
 function showVictory(){
-  clearInterval(timerInterval);simEnded=true;
   document.getElementById('victory-overlay').classList.add('visible');
+}
+
+function dismissVictory(){
+  document.getElementById('victory-overlay').classList.remove('visible');
+  document.getElementById('user-input').focus();
 }
 
 function showTyping(){document.getElementById('typing-indicator').classList.add('visible');scrollChat();}
@@ -668,7 +673,23 @@ async function sendMessage(){
     }
     conversationHistory.push({role:'assistant',content:full});
     addCustomerMessage(display,newDims,mood);
-    if(!simEnded&&messageCount>=20)setTimeout(()=>endSim(),2000);
+    const totalFound=Object.keys(discovered).length;
+    if(!simEnded&&totalFound>=DIMS.length){
+      setTimeout(()=>{
+        const chat=document.getElementById('chat-scroll');
+        const f=document.createElement('div');
+        f.className='discovery-flash';
+        f.style.background='rgba(227,24,55,0.15)';
+        f.style.borderColor='var(--eq-red)';
+        f.style.color='var(--eq-red)';
+        f.textContent='✓ MISSION COMPLETE — ALL DIMENSIONS DISCOVERED';
+        chat.insertBefore(f,document.getElementById('typing-indicator'));
+        scrollChat();
+        setTimeout(()=>endSim(),2000);
+      },600);
+    } else if(!simEnded&&messageCount>=20){
+      setTimeout(()=>endSim(),2000);
+    }
   }catch(e){
     hideTyping();
     addCustomerMessage("Sorry, I need to step away briefly. Give me just a moment.",[]);
