@@ -128,6 +128,66 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .learn-footer{border-top:1px solid var(--dark-border);padding:20px 32px;display:flex;justify-content:flex-end;background:var(--dark-surface);flex-shrink:0;}
 
 /* ══════════════════════════════════
+   ACT 2 — MISSION BRIEFING
+══════════════════════════════════ */
+#screen-briefing{padding:0;height:calc(100vh - 52px);}
+.briefing-header{background:var(--dark-surface);border-bottom:1px solid var(--dark-border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.briefing-header-title{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:3px;color:var(--eq-red);text-transform:uppercase;}
+.briefing-header-status{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--success);letter-spacing:2px;}
+.briefing-tabs{display:flex;border-bottom:1px solid var(--dark-border);flex-shrink:0;background:var(--dark-surface);}
+.briefing-tab{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:12px 28px;cursor:pointer;color:var(--text-dim);border-bottom:2px solid transparent;transition:all 0.2s;}
+.briefing-tab.active{color:var(--electric-blue);border-bottom-color:var(--electric-blue);}
+.briefing-tab:hover:not(.active){color:var(--text-secondary);}
+.briefing-body-wrap{flex:1;min-height:0;overflow:hidden;}
+.briefing-panel{display:none;height:100%;overflow-y:auto;padding:28px 36px 20px;}
+.briefing-panel.active{display:block;}
+.briefing-panel-two-col{display:none;height:100%;overflow:hidden;}
+.briefing-panel-two-col.active{display:grid;grid-template-columns:1fr 1fr;}
+@media(max-width:768px){.briefing-panel-two-col.active{grid-template-columns:1fr;overflow-y:auto;}}
+.briefing-left{padding:28px 36px 20px;overflow-y:auto;border-right:1px solid var(--dark-border);}
+.briefing-right{padding:28px 36px 20px;overflow-y:auto;background:var(--dark-panel);}
+.briefing-footer{background:var(--dark-surface);border-top:1px solid var(--dark-border);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:16px;}
+.briefing-footer-hint{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;}
+.b-section-label{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--eq-red);text-transform:uppercase;margin-bottom:14px;}
+.b-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:38px;line-height:1;color:var(--text-primary);margin-bottom:6px;}
+.b-company{font-size:13px;color:var(--electric-blue);font-weight:500;margin-bottom:18px;font-family:'Share Tech Mono',monospace;}
+.b-desc{font-size:13px;line-height:1.7;color:var(--text-secondary);margin-bottom:20px;}
+.b-intel-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+.b-intel-item{background:var(--dark-bg);border:1px solid var(--dark-border);padding:10px;}
+.b-intel-label{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:3px;}
+.b-intel-value{font-size:12px;font-weight:500;color:var(--text-primary);}
+.b-obj-list{list-style:none;margin-bottom:20px;}
+.b-obj-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--dark-border);font-size:13px;color:var(--text-secondary);line-height:1.5;}
+.b-obj-num{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--eq-red);background:var(--dark-panel);border:1px solid var(--eq-red-dark);padding:2px 7px;flex-shrink:0;margin-top:1px;}
+.b-score-display{background:var(--dark-bg);border:1px solid var(--dark-border);padding:14px;margin-bottom:18px;}
+.b-score-label{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px;}
+.b-score-track{height:5px;background:var(--dark-border);overflow:hidden;}
+.b-score-fill{height:100%;background:linear-gradient(90deg,var(--eq-red),var(--electric-blue));transition:width 0.8s cubic-bezier(0.4,0,0.2,1);width:0%;}
+.b-score-num{margin-top:6px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary);}
+.b-score-num span{font-size:12px;color:var(--text-dim);font-weight:400;font-family:'Barlow',sans-serif;}
+.b-tracker-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--dark-border);}
+.b-tracker-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--dark-border-bright);background:transparent;flex-shrink:0;margin-top:3px;transition:all 0.5s;}
+.b-tracker-dot.discovered{background:var(--success);border-color:var(--success);box-shadow:0 0 8px var(--success);}
+.b-tracker-dot.active-target{border-color:var(--electric-blue);box-shadow:0 0 8px var(--electric-blue);animation:pulse-dot 1.5s infinite;}
+.b-tracker-text{font-size:12px;color:var(--text-secondary);}
+.b-tracker-text.discovered{color:var(--success);}
+.b-tracker-text.active-target{color:var(--electric-blue);}
+.b-instr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+@media(max-width:600px){.b-instr-grid{grid-template-columns:1fr;}}
+.b-instr-card{background:var(--dark-bg);border:1px solid var(--dark-border);padding:14px;}
+.b-instr-icon{font-size:18px;margin-bottom:6px;}
+.b-instr-title{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+.b-instr-desc{font-size:12px;color:var(--text-secondary);line-height:1.5;}
+.b-rule{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--dark-border);}
+.b-rule-num{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--electric-blue);flex-shrink:0;padding-top:1px;}
+.b-rule-text{font-size:13px;color:var(--text-secondary);line-height:1.5;}
+.b-rule-text strong{color:var(--text-primary);font-weight:600;}
+.b-rank-table{width:100%;border-collapse:collapse;margin-top:12px;}
+.b-rank-table th{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;padding:7px 10px;text-align:left;border-bottom:1px solid var(--dark-border);}
+.b-rank-table td{padding:8px 10px;font-size:12px;color:var(--text-secondary);border-bottom:1px solid var(--dark-border);}
+.b-rank-table td:first-child{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;}
+
+/* ══════════════════════════════════
    ACT 2 — SIMULATION (inherited from rev5)
 ══════════════════════════════════ */
 #screen-sim{flex-direction:column;height:calc(100vh - 52px);overflow:hidden;}
@@ -450,7 +510,112 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
     </div>
     <div class="learn-footer">
-      <button class="btn-primary" onclick="goToSim()">Enter the Simulation &rarr;</button>
+      <button class="btn-primary" onclick="goToBriefing()">Mission Briefing &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN: MISSION BRIEFING (ACT 2 INTRO) ══ -->
+  <div class="screen" id="screen-briefing">
+    <div class="briefing-header">
+      <div class="briefing-header-title">// Mission Briefing — Classified //</div>
+      <div class="briefing-header-status">● Ready</div>
+    </div>
+    <div class="briefing-tabs">
+      <div class="briefing-tab active" onclick="switchBriefingTab('intel')">Intel</div>
+      <div class="briefing-tab" onclick="switchBriefingTab('instructions')">How to Play</div>
+      <div class="briefing-tab" onclick="switchBriefingTab('tracker')">Discovery Map</div>
+    </div>
+    <div class="briefing-body-wrap">
+
+      <!-- INTEL TAB -->
+      <div class="briefing-panel-two-col active" id="btab-intel">
+        <div class="briefing-left">
+          <div class="b-section-label">// Target Account</div>
+          <div class="b-title">Meridian<br>Health Network</div>
+          <div class="b-company">MERIDIAN-HEALTH-NET // ENTERPRISE TIER</div>
+          <div class="b-desc">A regional healthcare network operating 12 hospitals and 80 clinics across the Northeast, serving 2.5 million patients. They are in the middle of an AI-driven digital transformation — but their infrastructure strategy has critical gaps they haven't fully articulated.</div>
+          <div class="b-intel-grid">
+            <div class="b-intel-item"><div class="b-intel-label">Industry</div><div class="b-intel-value">Healthcare / AI</div></div>
+            <div class="b-intel-item"><div class="b-intel-label">Data Footprint</div><div class="b-intel-value">50TB repository</div></div>
+            <div class="b-intel-item"><div class="b-intel-label">Key System</div><div class="b-intel-value">Epic EMR</div></div>
+            <div class="b-intel-item"><div class="b-intel-label">AI Initiative</div><div class="b-intel-value">Active — urgent</div></div>
+            <div class="b-intel-item"><div class="b-intel-label">Stated Need</div><div class="b-intel-value">Colocation space</div></div>
+            <div class="b-intel-item"><div class="b-intel-label">Your Contact</div><div class="b-intel-value">VP Infrastructure</div></div>
+          </div>
+          <div class="b-section-label">// Your Objectives</div>
+          <ul class="b-obj-list">
+            <li class="b-obj-item"><span class="b-obj-num">01</span>Understand their workloads — what they do and why they matter</li>
+            <li class="b-obj-item"><span class="b-obj-num">02</span>Discover where their data lives and what it connects to</li>
+            <li class="b-obj-item"><span class="b-obj-num">03</span>Uncover performance, latency, and compliance requirements</li>
+            <li class="b-obj-item"><span class="b-obj-num">04</span>Surface the hidden need — the one they haven't told you about yet</li>
+          </ul>
+        </div>
+        <div class="briefing-right">
+          <div class="b-section-label">// Discovery Score</div>
+          <div class="b-score-display">
+            <div class="b-score-label">Completeness</div>
+            <div class="b-score-track"><div class="b-score-fill" style="width:0%"></div></div>
+            <div class="b-score-num">0% <span>of picture discovered</span></div>
+          </div>
+          <div class="b-section-label">// Discovery Dimensions</div>
+          <div>
+            <div class="b-tracker-item"><div class="b-tracker-dot" id="bdot-workload"></div><div><div class="b-tracker-text" id="btext-workload">The Workload — what does it do?</div></div></div>
+            <div class="b-tracker-item"><div class="b-tracker-dot" id="bdot-outcome"></div><div><div class="b-tracker-text" id="btext-outcome">Business Outcome — why does it matter?</div></div></div>
+            <div class="b-tracker-item"><div class="b-tracker-dot" id="bdot-users"></div><div><div class="b-tracker-text" id="btext-users">Users — who uses it and where?</div></div></div>
+            <div class="b-tracker-item"><div class="b-tracker-dot" id="bdot-data"></div><div><div class="b-tracker-text" id="btext-data">Data — where does it live?</div></div></div>
+            <div class="b-tracker-item"><div class="b-tracker-dot" id="bdot-connected"></div><div><div class="b-tracker-text" id="btext-connected">Connected Systems — what must it talk to?</div></div></div>
+            <div class="b-tracker-item"><div class="b-tracker-dot" id="bdot-performance"></div><div><div class="b-tracker-text" id="btext-performance">Performance — how critical is uptime?</div></div></div>
+            <div class="b-tracker-item"><div class="b-tracker-dot active-target" id="bdot-hidden"></div><div><div class="b-tracker-text active-target" id="btext-hidden">Hidden Need — ??? not yet revealed</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOW TO PLAY TAB -->
+      <div class="briefing-panel" id="btab-instructions">
+        <div class="b-section-label">// How to Play</div>
+        <div class="b-instr-grid">
+          <div class="b-instr-card"><div class="b-instr-icon">🎯</div><div class="b-instr-title">Your Mission</div><div class="b-instr-desc">You are an Equinix reseller on a first discovery call with Dr. Rachel Kim, VP of Infrastructure at Meridian Health Network. Ask smart questions to build a complete picture — including a critical need she hasn't mentioned.</div></div>
+          <div class="b-instr-card"><div class="b-instr-icon">⏱</div><div class="b-instr-title">5-Minute Clock</div><div class="b-instr-desc">A real discovery call has time pressure. The countdown starts when you send your first message. When time runs out the session ends automatically.</div></div>
+          <div class="b-instr-card"><div class="b-instr-icon">💡</div><div class="b-instr-title">Hints Available</div><div class="b-instr-desc">You have 3 hints available in the sidebar during the simulation. Each hint costs 5 points from your final score. Use them strategically.</div></div>
+          <div class="b-instr-card"><div class="b-instr-icon">📊</div><div class="b-instr-title">How You're Scored</div><div class="b-instr-desc">Seven discovery dimensions need to be uncovered. The hidden need is the hardest to find. Watch Dr. Kim's mood indicator — it shows how well your questions are landing.</div></div>
+        </div>
+        <div class="b-section-label">// Rules of Engagement</div>
+        <div class="b-rule"><div class="b-rule-num">01</div><div class="b-rule-text"><strong>Lead with workload, not colocation.</strong> Don't let the customer's surface ask define the conversation.</div></div>
+        <div class="b-rule"><div class="b-rule-num">02</div><div class="b-rule-text"><strong>Ask one focused question at a time.</strong> Dr. Kim is busy and guarded. Multi-part questions get short answers.</div></div>
+        <div class="b-rule"><div class="b-rule-num">03</div><div class="b-rule-text"><strong>Watch her mood indicator.</strong> It shows how engaged or impatient she's getting in real time.</div></div>
+        <div class="b-rule"><div class="b-rule-num">04</div><div class="b-rule-text"><strong>The hidden need won't surface on its own.</strong> Think about what a healthcare enterprise expanding into new markets might be worried about.</div></div>
+        <div class="b-rule" style="border-bottom:none;"><div class="b-rule-num">05</div><div class="b-rule-text"><strong>Type your own questions.</strong> The more authentic your questions, the more you will learn from the debrief.</div></div>
+        <div class="b-section-label" style="margin-top:24px;">// Partner Rank Scale</div>
+        <table class="b-rank-table">
+          <thead><tr><th>Score</th><th>Rank</th><th>What it means</th></tr></thead>
+          <tbody>
+            <tr><td style="color:var(--success);">85–100%</td><td style="color:var(--success);">Elite Discoverer</td><td>Full picture uncovered — including the hidden need.</td></tr>
+            <tr><td style="color:var(--electric-blue);">60–84%</td><td style="color:var(--electric-blue);">Trusted Advisor</td><td>Solid discovery with a few gaps your AE will fill.</td></tr>
+            <tr><td style="color:var(--warning);">40–59%</td><td style="color:var(--warning);">Solution Advisor</td><td>Surface-level discovery. Key dimensions were missed.</td></tr>
+            <tr><td style="color:var(--eq-red);">0–39%</td><td style="color:var(--eq-red);">Field Rep</td><td>You're handing your AE a blank page.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- DISCOVERY MAP TAB -->
+      <div class="briefing-panel" id="btab-tracker">
+        <div class="b-section-label">// Discovery Map</div>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px;line-height:1.7;">Seven dimensions make up a complete workload-led discovery. Each lights up as you find it during the simulation. The hidden need — marked in blue — is the most critical and hardest to surface.</p>
+        <div>
+          <div class="b-tracker-item"><div class="b-tracker-dot"></div><div><div class="b-tracker-text" style="font-weight:600;margin-bottom:2px;">The Workload</div><div style="font-size:12px;color:var(--text-dim);line-height:1.5;">What does the system actually do? What problem does it solve?</div></div></div>
+          <div class="b-tracker-item"><div class="b-tracker-dot"></div><div><div class="b-tracker-text" style="font-weight:600;margin-bottom:2px;">Business Outcome</div><div style="font-size:12px;color:var(--text-dim);line-height:1.5;">Why does it matter to the business? What's the measurable impact?</div></div></div>
+          <div class="b-tracker-item"><div class="b-tracker-dot"></div><div><div class="b-tracker-text" style="font-weight:600;margin-bottom:2px;">Users</div><div style="font-size:12px;color:var(--text-dim);line-height:1.5;">Who depends on this system? Where are they located?</div></div></div>
+          <div class="b-tracker-item"><div class="b-tracker-dot"></div><div><div class="b-tracker-text" style="font-weight:600;margin-bottom:2px;">Data Location</div><div style="font-size:12px;color:var(--text-dim);line-height:1.5;">Where does the data live today? How much? Where does it need to go?</div></div></div>
+          <div class="b-tracker-item"><div class="b-tracker-dot"></div><div><div class="b-tracker-text" style="font-weight:600;margin-bottom:2px;">Connected Systems</div><div style="font-size:12px;color:var(--text-dim);line-height:1.5;">What systems does it integrate with? What are the dependencies?</div></div></div>
+          <div class="b-tracker-item"><div class="b-tracker-dot"></div><div><div class="b-tracker-text" style="font-weight:600;margin-bottom:2px;">Performance &amp; Availability</div><div style="font-size:12px;color:var(--text-dim);line-height:1.5;">How critical is uptime? What are the latency and reliability requirements?</div></div></div>
+          <div class="b-tracker-item" style="border-bottom:none;"><div class="b-tracker-dot active-target"></div><div><div class="b-tracker-text active-target" style="font-weight:600;margin-bottom:2px;">Hidden Need ???</div><div style="font-size:12px;color:var(--text-dim);line-height:1.5;">Something the customer hasn't told you. You'll need to ask the right question to surface it.</div></div></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="briefing-footer">
+      <div class="briefing-footer-hint">// Review all three tabs — then enter the simulation</div>
+      <button class="btn-primary" onclick="goToSim()">Enter Simulation &rarr;</button>
     </div>
   </div>
 
@@ -523,7 +688,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
           </div>
           <div class="sim-input-footer">
             <div class="sim-version" style="font-size:10px;color:var(--text-dim);">Enter to send &nbsp;·&nbsp; Shift+Enter for new line</div>
-            <div class="sim-version">EQUINIX PARTNER SIM // REV5</div>
+            <div class="sim-version">EQUINIX PARTNER COURSE // REV2</div>
           </div>
         </div>
       </div>
@@ -598,9 +763,9 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
 <script>
 /* ══════════ COURSE NAVIGATION ══════════ */
-const ACTS = ['screen-title','screen-learn','screen-sim','screen-debrief'];
-const ACT_LABELS = ['Introduction','Act 1 — Learn','Act 2 — Practice','Act 3 — Reflect'];
-const ACT_PROGRESS = ['5','35','70','100'];
+const ACTS = ['screen-title','screen-learn','screen-briefing','screen-sim','screen-debrief'];
+const ACT_LABELS = ['Introduction','Act 1 — Learn','Act 2 — Mission Briefing','Act 2 — Practice','Act 3 — Reflect'];
+const ACT_PROGRESS = ['5','35','55','75','100'];
 let kcAnswered = {};
 
 function setScreen(id){
@@ -614,6 +779,18 @@ function setScreen(id){
 
 function goToLearn(){ setScreen('screen-learn'); }
 
+function goToBriefing(){
+  setScreen('screen-briefing');
+  switchBriefingTab('intel');
+}
+
+function switchBriefingTab(tab){
+  const tabs=['intel','instructions','tracker'];
+  document.querySelectorAll('.briefing-tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===tab));
+  document.querySelectorAll('.briefing-panel,.briefing-panel-two-col').forEach(p=>p.classList.remove('active'));
+  document.getElementById('btab-'+tab).classList.add('active');
+}
+
 function goToSim(){
   setScreen('screen-sim');
   initSim();
@@ -624,6 +801,7 @@ function restartCourse(){
   kcAnswered={};
   document.querySelectorAll('.kc-option').forEach(o=>{o.className='kc-option';o.disabled=false;});
   document.querySelectorAll('.kc-feedback').forEach(f=>f.style.display='none');
+  switchBriefingTab('intel');
   setScreen('screen-title');
 }
 
@@ -699,6 +877,8 @@ function resetSim(){
   DIMS.forEach(dim=>{
     const sd=document.getElementById('sdot-'+dim); if(sd){sd.className='sidebar-dot';if(dim==='hidden'){sd.style.borderColor='var(--electric-blue)';sd.style.animation='pulse-dot 1.5s infinite';}else{sd.style.borderColor='';sd.style.animation='';}}
     const st=document.getElementById('stext-'+dim); if(st){st.className='sidebar-tracker-text';st.style.color=dim==='hidden'?'var(--electric-blue)':'';}
+    const bd=document.getElementById('bdot-'+dim); if(bd){bd.className=dim==='hidden'?'b-tracker-dot active-target':'b-tracker-dot';}
+    const bt=document.getElementById('btext-'+dim); if(bt){bt.className=dim==='hidden'?'b-tracker-text active-target':'b-tracker-text';}
   });
 }
 
@@ -802,6 +982,8 @@ function showFlash(label){
 function markDiscovered(dim){
   const sd=document.getElementById('sdot-'+dim); if(sd){sd.classList.add('found');sd.style.animation='none';sd.style.borderColor='';}
   const st=document.getElementById('stext-'+dim); if(st){st.classList.add('found');st.style.color='';}
+  const bd=document.getElementById('bdot-'+dim); if(bd){bd.classList.add('discovered');bd.classList.remove('active-target');}
+  const bt=document.getElementById('btext-'+dim); if(bt){bt.classList.add('discovered');bt.classList.remove('active-target');}
 }
 
 function updateScore(pct){
